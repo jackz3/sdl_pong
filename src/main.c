@@ -1,4 +1,7 @@
 #define SDL_MAIN_HANDLED
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 #include <stdio.h>
 #include "util.h"
 #include "sdl_app.h"
@@ -17,7 +20,6 @@
 
 // One possibility of creating as a global our app
 SDLApp *app;
-// EntityManager *entityMgr;
 Ball *ball;
 Paddle *player1;
 Paddle *player2;
@@ -47,7 +49,6 @@ void HandleEvents()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
-        // Handle each specific event
         if (event.type == SDL_QUIT || event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_WINDOWEVENT_CLOSE)
         {
             SDLApp_StopAppLoop(app);
@@ -303,6 +304,5 @@ int main(int argc, char *argv[])
     Paddle_Destroy(player2);
     printf("end\n");
     // EntityManager_DeleteAll(entityMgr);
-
     return 0;
 }
